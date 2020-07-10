@@ -15,6 +15,11 @@ services:
             - ./app/MonitorServers:/codigo
         depends_on: 
             - bd
+        deploy:
+            resources:
+                limits:
+                    cpus: "1"
+                    memory: "512M"
     
     bd:
         image: mariadb:10.2.21
@@ -29,8 +34,14 @@ services:
         image: nginx
         restart: always
         ports:
-            - 8000:80 #se redirige al 80 de nginx
+            - 9000:80
+            - 8000:443 #se redirige al 80 de nginx
         volumes:
             - ./nginx/conf.d:/etc/nginx/conf.d
+            - ./nginx/nginx:/etc/nginx/
         depends_on:
             - app
+    tty:
+        build: ./app_tty
+        ports: 
+            - 8888:8888
