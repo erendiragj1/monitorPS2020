@@ -46,3 +46,4 @@ services:
         build: ./app_tty
         ports: 
             - 8888:8888
+    #Red manual
