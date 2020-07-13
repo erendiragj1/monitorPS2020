@@ -20,6 +20,7 @@ services:
                 limits:
                     cpus: "1"
                     memory: "512M"
+        
     
     bd:
         image: mariadb:10.2.21
@@ -46,4 +47,14 @@ services:
         build: ./app_tty
         ports: 
             - 8888:8888
-    #Red manual
+        networks:
+            app_net:
+                ipv4_address: 172.16.12.2
+
+#Red manual
+networks:
+    app_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: "172.16.12.0/30"
